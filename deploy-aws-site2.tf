@@ -14,11 +14,17 @@ resource "volterra_aws_vpc_site" "aws_site2" {
   }
 
   instance_type = var.aws_instance_type
-  assisted = false
-
+ 
   ingress_egress_gw {
     sm_connection_pvt_ip = true
     aws_certified_hw  = "aws-byol-multi-nic-voltmesh"
+    dynamic "performance_enhancement_mode" {
+      for_each = var.l3_mode ? [1] : []
+      content {
+         perf_mode_l3_enhanced = true
+      }
+    }
+
     inside_static_routes {
       static_route_list {
         simple_static_route = "10.131.1.0/24"

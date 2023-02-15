@@ -1,7 +1,6 @@
 resource "aws_instance" "pg-vpc1-vm1" {
 # TBD
   ami                                  = data.aws_ami.ubuntu.id
-#  ami                                  = "ami-0892d3c7ee96c0bf7"
   tenancy                              = "default"
   ebs_optimized                        = false
   disable_api_termination              = false
@@ -15,7 +14,7 @@ resource "aws_instance" "pg-vpc1-vm1" {
   private_ip                           = "${var.pg_vpc1_az_a_workload_vm_ip}"
   source_dest_check                    = false
   tags = {
-    Name = "${var.projectPrefix}-az-a-vm1"
+    Name = "${var.projectPrefix}-vpc1-az-a-vm1"
   }
   connection {
     user        = "ubuntu"
@@ -42,7 +41,6 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 echo $(uname -n) > /var/www/html/index.nginx-debian.html
 EOF
-#depends_on = [time_sleep.wait_15_min_1]
 }
 
 resource "aws_instance" "pg-vpc1-vm2" {
@@ -60,7 +58,7 @@ resource "aws_instance" "pg-vpc1-vm2" {
   private_ip                           = "${var.pg_vpc1_az_b_workload_vm_ip}"
   source_dest_check                    = false
   tags = {
-    Name = "${var.projectPrefix}-az-b-vm1"
+    Name = "${var.projectPrefix}-vpc1-az-b-vm1"
   }
   connection {
     user        = "ubuntu"
@@ -87,7 +85,6 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 echo $(uname -n) > /var/www/html/index.nginx-debian.html
 EOF
-#depends_on = [time_sleep.wait_15_min_1]
 }
 
 resource "aws_instance" "pg-vpc1-vm3" {
@@ -105,7 +102,7 @@ resource "aws_instance" "pg-vpc1-vm3" {
   private_ip                           = "${var.pg_vpc1_az_c_workload_vm_ip}"
   source_dest_check                    = false
   tags = {
-    Name = "${var.projectPrefix}-az-c-vm1"
+    Name = "${var.projectPrefix}-vpc1-az-c-vm1"
   }
   connection {
     user        = "ubuntu"
@@ -132,7 +129,6 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 echo $(uname -n) > /var/www/html/index.nginx-debian.html
 EOF
-#depends_on = [time_sleep.wait_15_min_1]
 }
 
 
@@ -142,7 +138,7 @@ resource "aws_instance" "pg-vpc1-jump" {
   ebs_optimized                        = false
   disable_api_termination              = false
   instance_initiated_shutdown_behavior = "stop"
-  instance_type                        = "${var.vm_instance_type}"
+  instance_type                        = "${var.jump_instance_type}"
   key_name                             = "${var.key_name}"
   monitoring                           = false
   vpc_security_group_ids               = [aws_security_group.pg-vpc1-external-sg.id]

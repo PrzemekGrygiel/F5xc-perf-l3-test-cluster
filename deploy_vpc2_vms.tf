@@ -14,7 +14,7 @@ resource "aws_instance" "pg-vpc2-vm1" {
   private_ip                           = "${var.pg_vpc2_az_a_workload_vm_ip}"
   source_dest_check                    = false
   tags = {
-    Name = "${var.projectPrefix}-az-a-vm2"
+    Name = "${var.projectPrefix}-vpc1-az-a-vm2"
   }
   connection {
     user        = "ubuntu"
@@ -59,7 +59,7 @@ resource "aws_instance" "pg-vpc2-vm2" {
   private_ip                           = "${var.pg_vpc2_az_b_workload_vm_ip}"
   source_dest_check                    = false
   tags = {
-    Name = "${var.projectPrefix}-az-b-vm2"
+    Name = "${var.projectPrefix}-vpc1-az-b-vm2"
   }
   connection {
     user        = "ubuntu"
@@ -105,7 +105,7 @@ resource "aws_instance" "pg-vpc2-vm3" {
   private_ip                           = "${var.pg_vpc2_az_c_workload_vm_ip}"
   source_dest_check                    = false
   tags = {
-    Name = "${var.projectPrefix}-az-c-vm2"
+    Name = "${var.projectPrefix}-vpc1-az-c-vm2"
   }
   connection {
     user        = "ubuntu"
@@ -142,7 +142,7 @@ resource "aws_instance" "pg-vpc2-jump" {
   ebs_optimized                        = false
   disable_api_termination              = false
   instance_initiated_shutdown_behavior = "stop"
-  instance_type                        = "${var.vm_instance_type}"
+  instance_type                        = "${var.jump_instance_type}"
   key_name                             = "${var.key_name}"
   monitoring                           = false
   vpc_security_group_ids               = [aws_security_group.pg-vpc2-external-sg.id]
